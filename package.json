@@ -1,0 +1,37 @@
+{
+  "name": "riysha-art-gallery",
+  "version": "1.0.0",
+  "description": "موقع متخصص في بيع اللوحات الفنية الأصلية - E-commerce Art Gallery",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "live": "live-server",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "art",
+    "gallery",
+    "e-commerce",
+    "paintings",
+    "arabic",
+    "rtl",
+    "shop",
+    "لوحات",
+    "فن",
+    "متجر"
+  ],
+  "author": "Riysha Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/riysha-art-gallery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/riysha-art-gallery/issues"
+  },
+  "homepage": "https://github.com/yourusername/riysha-art-gallery#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
