@@ -1,0 +1,34 @@
+{
+  "name": "elhassandouki/riysha-art-gallery",
+  "description": "Riysha Art Gallery - Professional WordPress Theme for Art Galleries",
+  "type": "wordpress-theme",
+  "version": "1.0.0",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "El Hassan Douki",
+      "homepage": "https://github.com/elhassandouki"
+    }
+  ],
+  "keywords": [
+    "wordpress",
+    "theme",
+    "art",
+    "gallery",
+    "ecommerce",
+    "woocommerce",
+    "rtl",
+    "arabic"
+  ],
+  "homepage": "https://github.com/elhassandouki/riysha-art-gallery",
+  "support": {
+    "issues": "https://github.com/elhassandouki/riysha-art-gallery/issues",
+    "source": "https://github.com/elhassandouki/riysha-art-gallery"
+  },
+  "require": {
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  }
+}
