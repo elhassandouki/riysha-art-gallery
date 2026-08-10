@@ -38,7 +38,7 @@
                         'fallback_cb'     => function() {
                             echo '<ul class="nav-menu">';
                             echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">الرئيسية</a></li>';
-                            echo '<li><a href="' . esc_url( wc_get_shop_url() ) . '">المتجر</a></li>';
+                            echo '<li><a href="' . esc_url( home_url( '/shop' ) ) . '">المتجر</a></li>';
                             echo '<li><a href="' . esc_url( home_url( '/contact' ) ) . '">اتصل بنا</a></li>';
                             echo '</ul>';
                         },
@@ -50,9 +50,24 @@
                 <!-- Icons -->
                 <div class="header-icons">
                     <button class="search-btn"><i class="fas fa-search"></i></button>
-                    <a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="cart-btn">
+                    <?php 
+                    $cart_url = '#';
+                    $cart_count = 0;
+                    
+                    // تحقق من WooCommerce
+                    if ( function_exists( 'WC' ) ) {
+                        $cart_url = WC()->cart->get_cart_url();
+                        $cart_count = WC()->cart->get_cart_contents_count();
+                    } elseif ( function_exists( 'wc_get_cart_url' ) ) {
+                        $cart_url = wc_get_cart_url();
+                        if ( function_exists( 'wc_get_cart_contents_count' ) ) {
+                            $cart_count = wc_get_cart_contents_count();
+                        }
+                    }
+                    ?>
+                    <a href="<?php echo esc_url( $cart_url ); ?>" class="cart-btn">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count"><?php echo esc_html( WC()->cart->get_cart_contents_count() ); ?></span>
+                        <span class="cart-count"><?php echo esc_html( $cart_count ); ?></span>
                     </a>
                 </div>
             </div>

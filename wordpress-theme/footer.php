@@ -21,7 +21,7 @@
                         'fallback_cb'    => function() {
                             echo '<ul class="footer-menu">';
                             echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'الرئيسية', 'riysha-art-gallery' ) . '</a></li>';
-                            echo '<li><a href="' . esc_url( wc_get_shop_url() ) . '">' . esc_html__( 'المتجر', 'riysha-art-gallery' ) . '</a></li>';
+                            echo '<li><a href="' . esc_url( home_url( '/shop' ) ) . '">' . esc_html__( 'المتجر', 'riysha-art-gallery' ) . '</a></li>';
                             echo '<li><a href="#">' . esc_html__( 'عن الموقع', 'riysha-art-gallery' ) . '</a></li>';
                             echo '<li><a href="#">' . esc_html__( 'سياسة الخصوصية', 'riysha-art-gallery' ) . '</a></li>';
                             echo '</ul>';

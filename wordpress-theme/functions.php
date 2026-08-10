@@ -79,11 +79,13 @@ function riysha_setup() {
         'footer'  => esc_html__( 'قائمة التذييل', 'riysha-art-gallery' ),
     ) );
 
-    // دعم WooCommerce
-    add_theme_support( 'woocommerce' );
-    add_theme_support( 'wc-product-gallery-zoom' );
-    add_theme_support( 'wc-product-gallery-lightbox' );
-    add_theme_support( 'wc-product-gallery-slider' );
+    // دعم WooCommerce (إذا كان مثبتاً)
+    if ( class_exists( 'WooCommerce' ) ) {
+        add_theme_support( 'woocommerce' );
+        add_theme_support( 'wc-product-gallery-zoom' );
+        add_theme_support( 'wc-product-gallery-lightbox' );
+        add_theme_support( 'wc-product-gallery-slider' );
+    }
 
     // دعم Custom Logo
     add_theme_support( 'custom-logo', array(
@@ -134,14 +136,18 @@ add_filter( 'body_class', 'riysha_body_classes' );
 /**
  * عدد المنتجات في الصفحة
  */
-add_filter( 'loop_shop_per_page', function() {
-    return 5;
-} );
+if ( class_exists( 'WooCommerce' ) ) {
+    add_filter( 'loop_shop_per_page', function() {
+        return 5;
+    } );
+}
 
 /**
- * إزالة الـ Breadcrumb الافتراضي
+ * إزالة الـ Breadcrumb الافتراضي (فقط إذا كان WooCommerce مثبتاً)
  */
-remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+if ( class_exists( 'WooCommerce' ) ) {
+    remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+}
 
 /**
  * Custom WooCommerce Template Functions
@@ -171,29 +177,31 @@ if ( ! function_exists( 'riysha_get_product_price' ) ) {
 }
 
 /**
- * AJAX Add to Cart
+ * AJAX Add to Cart (فقط إذا كان WooCommerce مثبتاً)
  */
-add_action( 'wp_ajax_riysha_add_to_cart', 'riysha_add_to_cart_ajax' );
-add_action( 'wp_ajax_nopriv_riysha_add_to_cart', 'riysha_add_to_cart_ajax' );
+if ( class_exists( 'WooCommerce' ) ) {
+    add_action( 'wp_ajax_riysha_add_to_cart', 'riysha_add_to_cart_ajax' );
+    add_action( 'wp_ajax_nopriv_riysha_add_to_cart', 'riysha_add_to_cart_ajax' );
 
-function riysha_add_to_cart_ajax() {
-    check_ajax_referer( 'riysha-nonce', 'nonce' );
+    function riysha_add_to_cart_ajax() {
+        check_ajax_referer( 'riysha-nonce', 'nonce' );
 
-    $product_id = intval( $_POST['product_id'] );
-    $quantity   = intval( $_POST['quantity'] ) ?: 1;
+        $product_id = intval( $_POST['product_id'] );
+        $quantity   = intval( $_POST['quantity'] ) ?: 1;
 
-    if ( WC()->cart->add_to_cart( $product_id, $quantity ) ) {
-        wp_send_json_success( array(
-            'message'    => esc_html__( 'تمت إضافة المنتج إلى السلة', 'riysha-art-gallery' ),
-            'cart_count' => WC()->cart->get_cart_contents_count(),
-            'cart_total' => WC()->cart->get_cart_total(),
-        ) );
-    } else {
-        wp_send_json_error( array(
-            'message' => esc_html__( 'فشلت إضافة المنتج', 'riysha-art-gallery' ),
-        ) );
+        if ( WC()->cart->add_to_cart( $product_id, $quantity ) ) {
+            wp_send_json_success( array(
+                'message'    => esc_html__( 'تمت إضافة المنتج إلى السلة', 'riysha-art-gallery' ),
+                'cart_count' => WC()->cart->get_cart_contents_count(),
+                'cart_total' => WC()->cart->get_cart_total(),
+            ) );
+        } else {
+            wp_send_json_error( array(
+                'message' => esc_html__( 'فشلت إضافة المنتج', 'riysha-art-gallery' ),
+            ) );
+        }
+        wp_die();
     }
-    wp_die();
 }
 
 /**
