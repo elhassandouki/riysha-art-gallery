@@ -16,6 +16,8 @@ get_header();
                 $shop_url = home_url( '/shop' );
                 if ( function_exists( 'wc_get_shop_url' ) ) {
                     $shop_url = wc_get_shop_url();
+                } elseif ( class_exists( 'WooCommerce' ) ) {
+                    $shop_url = get_permalink( wc_get_page_id( 'shop' ) );
                 }
                 ?>
                 <a href="<?php echo esc_url( $shop_url ); ?>" class="btn btn-primary">

@@ -32,13 +32,21 @@
                 <!-- Navigation -->
                 <nav class="nav">
                     <?php
+                    // Safe shop URL detection
+                    $shop_url = home_url( '/shop' );
+                    if ( function_exists( 'wc_get_shop_url' ) ) {
+                        $shop_url = wc_get_shop_url();
+                    } elseif ( class_exists( 'WooCommerce' ) ) {
+                        $shop_url = get_permalink( wc_get_page_id( 'shop' ) );
+                    }
+                    
                     wp_nav_menu( array(
                         'theme_location'  => 'primary',
                         'menu_class'      => 'nav-menu',
-                        'fallback_cb'     => function() {
+                        'fallback_cb'     => function() use ( $shop_url ) {
                             echo '<ul class="nav-menu">';
                             echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">الرئيسية</a></li>';
-                            echo '<li><a href="' . esc_url( home_url( '/shop' ) ) . '">المتجر</a></li>';
+                            echo '<li><a href="' . esc_url( $shop_url ) . '">المتجر</a></li>';
                             echo '<li><a href="' . esc_url( home_url( '/contact' ) ) . '">اتصل بنا</a></li>';
                             echo '</ul>';
                         },

@@ -15,13 +15,21 @@
                 <div class="footer-section">
                     <h3><?php esc_html_e( 'روابط مهمة', 'riysha-art-gallery' ); ?></h3>
                     <?php
+                    // Safe shop URL detection
+                    $shop_url = home_url( '/shop' );
+                    if ( function_exists( 'wc_get_shop_url' ) ) {
+                        $shop_url = wc_get_shop_url();
+                    } elseif ( class_exists( 'WooCommerce' ) ) {
+                        $shop_url = get_permalink( wc_get_page_id( 'shop' ) );
+                    }
+                    
                     wp_nav_menu( array(
                         'theme_location' => 'footer',
                         'menu_class'     => 'footer-menu',
-                        'fallback_cb'    => function() {
+                        'fallback_cb'    => function() use ( $shop_url ) {
                             echo '<ul class="footer-menu">';
                             echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'الرئيسية', 'riysha-art-gallery' ) . '</a></li>';
-                            echo '<li><a href="' . esc_url( home_url( '/shop' ) ) . '">' . esc_html__( 'المتجر', 'riysha-art-gallery' ) . '</a></li>';
+                            echo '<li><a href="' . esc_url( $shop_url ) . '">' . esc_html__( 'المتجر', 'riysha-art-gallery' ) . '</a></li>';
                             echo '<li><a href="#">' . esc_html__( 'عن الموقع', 'riysha-art-gallery' ) . '</a></li>';
                             echo '<li><a href="#">' . esc_html__( 'سياسة الخصوصية', 'riysha-art-gallery' ) . '</a></li>';
                             echo '</ul>';
